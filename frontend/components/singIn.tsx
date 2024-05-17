@@ -5,18 +5,28 @@ import { Input } from './ui/input'
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { SignInCheck } from '@/app/validations/iT';
 
 const SignInPage = () => {
     const [error,setError] = React.useState<string | null>(null);
     const [loading,setLoading] = React.useState<boolean>(false);    
-    const [data,setData ] = React.useState<any>({email: "" , password : ""});
+    const [data,setData ] = React.useState({email: "" , password : ""});
     
     const hanldeSubmit = async ()=>{
       try {
+        const validation =SignInCheck.safeParse(data)
+        if(validation.success){ 
         let response = await axios.post("http://localhost:8080/api/v1/signin", data )
-        const {message} = response.data;
-        toast.success(message?.message,{autoClose: 2000})
-      } catch (error :any) {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        console.log("sucess" , token)
+        toast.success(response.data.message,{autoClose: 2000})
+        }
+        else{
+          setError(validation.error.message)
+          console.log(validation.error.message)
+        }
+      } catch (error:any) {
         toast.error("Error", error)
       }
     }

@@ -1,24 +1,42 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express"
-import jwt from "jsonwebtoken"
+import jwt, { verify } from "jsonwebtoken"
 
 const router = express.Router();
 const prisma  = new PrismaClient()
 
+// router.use("/" , (req, res, next) => {
+//    try {
+//     const authorization = req.headers.authorization || ""
+//     if(authorization === ""){
+//         return res.status(401).json({message : "Nothing Stuck"})
+//     }
+//     const verifyAuthor = jwt.verify(authorization, process.env.JWT_SECRET || "nothing")
+//     if(!verifyAuthor){
+//         return res.status(401).json({message : "Unauthorized Request"})
+//     }
+//     next()
+//    } catch (error) {
+//      res.json({message : "Unauthorized Request"})
+//    }
+// })
 
-router.post("/post", async(req, res) => {
+
+router.post("/post/new", async(req, res) => {
    try {
+    const authorization = req.headers.authorization|| ""
+    console.log(authorization)
+    const verifyAuthor = jwt.verify(authorization, process.env.JWT_SECRET || "nothing")
+    console.log(verifyAuthor)
     const {title , content } = req.body
-    // const token  = req.headers.authorization || ""
-    // const id  = jwt.verify(token, process.env.JWT_SECRET || "nothing")
-    const post = await prisma.post.create({
-        data: {
-            title: title,
-            content: content,
-            authorId : 1
-        }
-    })
-     return res.json({post : post , message : "Post created successfully"})
+    // const post = await prisma.post.create({
+    //     data: {
+    //         title: title,
+    //         content: content,
+    //         authorId : 1
+    //     }
+    // })
+    //  return res.json({post : post , message : "Post created successfully"})
    } catch (error) {
      console.error
      console.log(error)

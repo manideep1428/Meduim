@@ -1,15 +1,27 @@
 import axios from 'axios';
 import { useEffect , useState} from "react";
 
+interface Blogs{
+  title :string;
+  content :string
+  id:string
+  authorId:{
+    author :string
+  }
+}
+
 interface Blog{
-    title :string;
-    content :string
-    id:string
+  title :string;
+  content :string
+  id:string
+  authorId:{
+    author :string
+  }
 }
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(false);
-    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [blogs, setBlogs] = useState<Blogs[]>([]);
   
     useEffect(() => {
       axios.get(`http://localhost:8080/v1/posts`).then((response) => {
@@ -27,22 +39,21 @@ export const useBlogs = () => {
   };
   
 
-  export const useEachBlogs = ({id}:{id:String}) => {
+  export const useEachBlogs = ({id}:any) => {
     const [loading, setLoading] = useState(false);
-    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [blog, setBlog] = useState<Blog>();
   
-    useEffect(() => {
-      axios.get(`http://localhost:8080/v1/posts`).then((response) => {
+    useEffect( () => {
+       axios.get(`http://localhost:8080/blog/${id}`)
+       .then((response) => {
         setLoading(true);
-        setBlogs(response.data.blog);
+        setBlog(response.data.blog);
       }).catch((error) => {
         console.error("Error fetching blogs:", error);
       });
-    }, [blogs]);
-  
+    }, [id]);
     return(
-      {loading,
-      blogs}
+      { blog  , loading}
     )    
   };
   

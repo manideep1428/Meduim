@@ -3,25 +3,30 @@ import React from 'react'
 import axios from "axios";
 import { Input } from './ui/input'
 import { Button } from './ui/button';
-import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { toast ,ToastContainer } from 'react-toastify';
 
 
 
 const SignUpPage = () => {
-    const toast = useToast();
     const router = useRouter();
     const [error,setError] = React.useState<string | null>(null);
     const [loading,setLoading] = React.useState<boolean>(false);    
     const [data,setData ] = React.useState<any>({email: "" , password : "" ,name:''});
     
     const hanldeSubmit = async ()=>{
+       setLoading(true)
       try {
        let response = await axios.post("http://localhost:8080/api/v1/signup", data )
-       console.log(response.data)
-      } catch (error) {
-        
+       if(response.data){
+       const message = response.data.message;
+        localStorage.setItem("token", response.data.token);
+        toast.success(message)
+        setLoading(false)
+       }
+      } catch({error}:any){
+        toast.error(error)
       }
     }
 
@@ -45,12 +50,15 @@ const SignUpPage = () => {
       <Button 
       type='submit'
       onClick={hanldeSubmit}
-      > SignUp
+      >{ loading ?
+          "Loading"  : 
+          "SignUp"}
        </Button>
        <div>
          <p>Already have Account ? 
             <Link href={"/signin"} className='text-blue-600'> SignIn </Link>
          </p>
+         <ToastContainer/>
        </div>
     </div>
   )
