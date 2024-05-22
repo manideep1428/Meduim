@@ -5,3 +5,9 @@ export default function getUser(){
     }
     return false
 }
+
+export function SignOut(){
+    localStorage.removeItem('token')
+     window.location.reload();
+    return ({ message: "Successfully LogOut"})
+}

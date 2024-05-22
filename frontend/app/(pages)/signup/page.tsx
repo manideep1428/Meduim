@@ -1,5 +1,4 @@
 import SignUpPage from '@/components/singUp'
-import { Button } from '@/components/ui/button'
 import React from 'react'
 
 const page = () => {

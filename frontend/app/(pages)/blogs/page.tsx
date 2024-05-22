@@ -1,16 +1,25 @@
 'use client'
 import getUser  from '@/app/validations/user'
+import Appbar from '@/components/Appbar'
 import Blog from '@/components/blog'
 import React from 'react'
 
 const page = () => {
- if(!getUser){
-  return (
-    <h1>You Have No Access</h1>
+ if(!getUser()){
+  window.location.assign("/signup")
+  return(
+    <div
+    className='flex justify-center items-center h-full 
+                text-3xl'> Your Not Logged In</div>
   )
 }
 return(
-  <Blog/>
+  <div className='flex flex-col h-full w-full'>
+    <Appbar/>
+   <div className='w-full h-full flex justify-center items-center'>
+   <Blog/>
+   </div>
+  </div>
 )
 }
 

@@ -10,9 +10,9 @@ interface Props{
 const AvatarSvg = ({imageUrl,name} :Props)  => {
   return (
     <div>
-        <Avatar className=' hover:cursor-pointer'>
-            <AvatarImage src={imageUrl} alt={name} />
-           <AvatarFallback>{ name.slice(0,1) }</AvatarFallback> 
+        <Avatar className='hover:cursor-pointer'>
+            <AvatarImage className='w-8 h-8' src={imageUrl} alt={name} />
+           <AvatarFallback className='w-8 h-8'>{ name.slice(0,1) }</AvatarFallback> 
         </Avatar>
     </div>
   )

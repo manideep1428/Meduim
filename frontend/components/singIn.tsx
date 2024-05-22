@@ -4,13 +4,16 @@ import axios from "axios";
 import { Input } from './ui/input'
 import { Button } from './ui/button';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
-import { SignInCheck } from '@/app/validations/iT';
+import { ToastContainer, toast } from 'react-toastify';
+import { SignInCheck } from '@/app/validations/Index';
+import { useRouter } from 'next/navigation';
+import getUser from '@/app/validations/user';
 
 const SignInPage = () => {
     const [error,setError] = React.useState<string | null>(null);
     const [loading,setLoading] = React.useState<boolean>(false);    
     const [data,setData ] = React.useState({email: "" , password : ""});
+    const router = useRouter();
     
     const hanldeSubmit = async ()=>{
       try {
@@ -19,8 +22,8 @@ const SignInPage = () => {
         let response = await axios.post("http://localhost:8080/api/v1/signin", data )
         const token = response.data.token;
         localStorage.setItem("token", token);
-        console.log("sucess" , token)
         toast.success(response.data.message,{autoClose: 2000})
+        router.push("/blogs")
         }
         else{
           setError(validation.error.message)
@@ -30,6 +33,10 @@ const SignInPage = () => {
         toast.error("Error", error)
       }
     }
+  
+    if(getUser()){
+      return router.push("/blogs")
+  }
 
   return (
     <div className='flex flex-col w-full max-w-sm items-center my-6 gap-6'>
@@ -53,6 +60,7 @@ const SignInPage = () => {
             <Link href={"/signup"} className='text-blue-600'> SignUp </Link>
          </p>
        </div>
+       <ToastContainer/>
     </div>
   )
 }

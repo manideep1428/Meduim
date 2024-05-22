@@ -27,12 +27,12 @@ router.post("/v1/signin", async (req,res)=>{
             message : "password is not correct",
         })
     }
-    // res.cookie("token",user?.id,{
-    //     httpOnly : true,
-    //     secure : true   
-    // })
-    const token = jwt.sign({id : user?.id},process.env.JWT_SECRET || "nothing")
-    res.send({message : "login success"})
+    res.cookie("token",user?.id,{
+        httpOnly : true,
+        secure : true   
+    })
+    const token = jwt.sign({id : user?.id} , process.env.JWT_SECRET || "nothing")
+    res.send({message : "login success" , token : token})
 })              
 
 
@@ -48,12 +48,12 @@ router.post("/v1/signup", async (req,res)=>{
         }
     })
     const token = jwt.sign({id : user.id},process.env.JWT_SECRET || "nothing")
-    // res.cookie("token",token)
+    res.cookie("token",token)
     console.log(token);
     return res.send({message : "user created" , token :token})
    }catch(e){
     console.log(e)
-    return res.send({message: "User Not Created" , err:e})
+    return res.send({message: "User Not Created" , err : e})
    }
 })
 

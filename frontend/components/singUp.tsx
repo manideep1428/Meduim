@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { toast ,ToastContainer } from 'react-toastify';
+import getUser from '@/app/validations/user';
 
 
 
@@ -15,14 +16,19 @@ const SignUpPage = () => {
     const [loading,setLoading] = React.useState<boolean>(false);    
     const [data,setData ] = React.useState<any>({email: "" , password : "" ,name:''});
     
+    
     const hanldeSubmit = async ()=>{
        setLoading(true)
       try {
        let response = await axios.post("http://localhost:8080/api/v1/signup", data )
        if(response.data){
        const message = response.data.message;
+       console.log(response.data.token)
         localStorage.setItem("token", response.data.token);
         toast.success(message)
+        setTimeout(() => {
+          router.push("/blogs");
+        }, 2000);
         setLoading(false)
        }
       } catch({error}:any){
