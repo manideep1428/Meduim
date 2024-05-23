@@ -15,7 +15,7 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import AvatarSvg from "./AvatarBlog"
-import { SignOut } from "@/app/validations/user"
+import { SignOut } from "@/app/utils/user"
 import Alert from "./AlertBox"
 import { useState } from "react"
 

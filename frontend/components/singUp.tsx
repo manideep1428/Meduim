@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { toast ,ToastContainer } from 'react-toastify';
-import getUser from '@/app/validations/user';
+import getUser from '@/app/utils/user';
 
 
 

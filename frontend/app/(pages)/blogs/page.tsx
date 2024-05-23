@@ -1,5 +1,5 @@
 'use client'
-import getUser  from '@/app/validations/user'
+import getUser  from '@/app/utils/user'
 import Appbar from '@/components/Appbar'
 import Blog from '@/components/blog'
 import React from 'react'

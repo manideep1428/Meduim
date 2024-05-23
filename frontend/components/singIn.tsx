@@ -5,9 +5,9 @@ import { Input } from './ui/input'
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
-import { SignInCheck } from '@/app/validations/Index';
+import { SignInCheck } from '@/app/utils/Index';
 import { useRouter } from 'next/navigation';
-import getUser from '@/app/validations/user';
+import getUser from '@/app/utils/user';
 
 const SignInPage = () => {
     const [error,setError] = React.useState<string | null>(null);
