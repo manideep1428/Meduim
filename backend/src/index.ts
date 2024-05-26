@@ -11,10 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors())
-app.use("/api/v1" , userRouter)
+app.use("/api" , userRouter)
 app.use("/api/v1" , postRouter)
 
 
 app.listen(port, () => {
     console.log("Server is running at http://localhost:" + port);  
-})
+});          

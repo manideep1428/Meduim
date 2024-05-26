@@ -11,28 +11,32 @@ const prisma = new PrismaClient();
 router.post("/v1/signin", async (req,res)=>{
     // ...
     const {email ,password} = req.body;
-    const user = await prisma.user.findUnique({
-        where : {
-            email : email
-        }
-    });
-    if(!user){
-        res.status(404).json({
-            message : "user not found",
-        });
+    try {        
+            const user = await prisma.user.findUnique({
+                where : {
+                    email : email
+                }
+            });
+            if(!user){
+                res.status(404).json({
+                    message : "user not found",
+                });
+            }
+            
+            if(user?.password !== password){
+                res.status(404).json({
+                    message : "password is not correct",
+                })
+            }
+            res.cookie("token",user?.id,{
+                httpOnly : true,
+                secure : true   
+            })
+            const token = jwt.sign({id : user?.id} , process.env.JWT_SECRET || "nothing")
+            res.send({message : "login success" , token : token})
+    } catch (error) {
+       return  res.json({err : error})
     }
-    
-    if(user?.password !== password){
-        res.status(404).json({
-            message : "password is not correct",
-        })
-    }
-    res.cookie("token",user?.id,{
-        httpOnly : true,
-        secure : true   
-    })
-    const token = jwt.sign({id : user?.id} , process.env.JWT_SECRET || "nothing")
-    res.send({message : "login success" , token : token})
 })              
 
 
