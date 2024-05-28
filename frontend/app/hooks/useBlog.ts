@@ -10,14 +10,12 @@ interface Blogs{
   }
 }
 
-// interface Blog{
-//   title :string;
-//   content :string
-//   id:string
-//   authorId:{
-//     author :string
-//   }
-// }
+interface Blog{
+  title :string;
+  content :string
+  id:string
+  authorId:string
+}
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(false);
@@ -25,8 +23,8 @@ export const useBlogs = () => {
   
     useEffect(() => {
       axios.get(`http://localhost:8080/api/v1/posts`).then((response) => {
-        setBlogs(response.data);
-        setLoading(true)
+      setLoading(true)
+      setBlogs(response.data);
       }).catch((error) => {
         console.error("Error fetching blogs:", error);
       });
@@ -39,14 +37,15 @@ export const useBlogs = () => {
   };
   
 
-  export const useEachBlogs = ({id}:any) => {
-    const [loading, setLoading] = useState(false);
-    const [blog, setBlog] = useState<any>({});
+  export const useEachBlogs = (id:Number) => {
+    const [loading, setLoading] = useState(true);
+    const [blog, setBlog] = useState<Blog>();
   
     useEffect( () => {
+      console.log("Req came")
        axios.get(`http://localhost:8080/api/v1/post/${id}`)
        .then((response) => {
-        setLoading(true);
+        setLoading(false);
         setBlog(response.data.blog);
       }).catch((error) => {
         console.error("Error fetching blogs:", error);

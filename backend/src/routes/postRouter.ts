@@ -36,6 +36,7 @@ router.post("/post", async(req, res) => {
 //updating post 
  
 router.put("/post/:id", async(req, res) => {
+    console.log("updating post...")
     try {
         const {title , content } = req.body
         const {id}  =  req.params
@@ -101,8 +102,22 @@ router.get("/posts",async (req,res)=>{
     console.log(error)
      res.send(error);
    }
+});
+
+//each blogpost
+router.get("/post/:id", async (req,res)=>{
+    const id = req.params.id
+    try {
+        const blog = await prisma.post.findUnique({
+         where:{
+            id :Number(id)
+         }
+        })  
+        console.log(blog)
+        return res.json({blog:blog})
+    } catch (error) {
+        
+    }
 })
-
-
 
 export {router as postRouter}
