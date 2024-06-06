@@ -1,12 +1,4 @@
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -20,7 +12,7 @@ import Alert from "./AlertBox"
 import { useState } from "react"
 
 
-export function DropdownMenuDemo() {
+export default function ProfileIcon() {
     const [alert,setAlert] = useState(false)
     const handleAlert =()=>{
         setAlert(false);

@@ -9,9 +9,9 @@ import { toast ,ToastContainer } from 'react-toastify';
 
 
 
-const SignUpPage = () => {
+export default function SignUp() {
     const router = useRouter();
-    const [error,setError] = React.useState<string | null>(null);
+    // const [error,setError] = React.useState<string | null>(null);
     const [loading,setLoading] = React.useState<boolean>(false);    
     const [data,setData ] = React.useState<any>({email: "" , password : "" ,name:''});
     
@@ -19,19 +19,19 @@ const SignUpPage = () => {
     const hanldeSubmit = async ()=>{
        setLoading(true)
       try {
+        console.log(data)
        let response = await axios.post("http://localhost:8080/api/v1/signup", data )
        if(response.data){
        const message = response.data.message;
-       console.log(response.data.token)
+       console.log(response.data)
         localStorage.setItem("token", response.data.token);
         toast.success(message)
-        setTimeout(() => {
-          router.push("/blogs");
-        }, 2000);
-        setLoading(false)
+        setLoading(false) 
+        router.push("/home")
        }
       } catch({error}:any){
-        toast.error(error)
+        toast.error(error.message[0])
+        setLoading(false)
       }
     }
 
@@ -56,7 +56,7 @@ const SignUpPage = () => {
       type='submit'
       onClick={hanldeSubmit}
       >{ loading ?
-          "Loading"  : 
+          "...Loading"  : 
           "SignUp"}
        </Button>
        <div>
@@ -68,5 +68,3 @@ const SignUpPage = () => {
     </div>
   )
 }
-
-export default SignUpPage;

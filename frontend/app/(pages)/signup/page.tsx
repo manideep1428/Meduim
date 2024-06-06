@@ -1,12 +1,20 @@
-import SignUpPage from '@/components/singUp'
+'use client'
+import GetUser from '@/app/utils/user'
+import SignUp from '../../../components/signUp'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
-const page = () => {
+const SignUppage = () => {
+  const router  = useRouter()
+  if(GetUser()){
+   router.push("/home")
+    return(<div></div>)
+  }
   return (
   <div className='w-screen h-screen flex flex-col items-center justify-center'>
-     <SignUpPage/>
+     <SignUp/>
   </div>
   )
 }
 
-export default page
+export default SignUppage

@@ -4,8 +4,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
-import { headers } from "next/headers";
-import { BlogInputCheck } from "@/app/utils/Index";
+import { BlogInputCheck } from "@/app/utils/types";
 
 export default function NewBlog(){
     const [loading,setLoading] = useState(false);

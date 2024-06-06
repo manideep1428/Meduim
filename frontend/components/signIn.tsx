@@ -5,37 +5,36 @@ import { Input } from './ui/input'
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
-import { SignInCheck } from '@/app/utils/Index';
+import { SignInCheck } from '@/app/utils/types';
 import { useRouter } from 'next/navigation';
 import getUser from '@/app/utils/user';
 
-const SignInPage = () => {
-    const [error,setError] = React.useState<string | null>(null);
+export default function SignIn() : React.ReactNode {
+    // const [error,setError] = React.useState<string | null>(null);
     const [loading,setLoading] = React.useState<boolean>(false);    
     const [data,setData ] = React.useState({email: "" , password : ""});
     const router = useRouter();
     
     const hanldeSubmit = async ()=>{
       try {
+        setLoading(true)
         const validation =SignInCheck.safeParse(data)
         if(validation.success){ 
-        let response = await axios.post("http://localhost:8080/api/v1/signin", data )
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        toast.success(response.data.message,{autoClose: 2000})
-        router.push("/blogs")
+        let response = await axios.post("http://localhost:8080/api/v1/signin", validation.data )
+        if(response.data.success){
+            localStorage.setItem("token",response.data.token)
+            setLoading(false)
+            router.push("/blogs")
         }
-        else{
-          setError(validation.error.message)
-          console.log(validation.error.message)
         }
       } catch (error:any) {
         toast.error("Error", error)
+        setLoading(false);
       }
     }
   
     if(getUser()){
-      return router.push("/blogs")
+      router.push("/blogs")
   }
 
   return (
@@ -53,7 +52,7 @@ const SignInPage = () => {
       <Button 
       type='submit'
       onClick={hanldeSubmit}
-      > SignIn
+      > {loading ? "Loading" : "SignIn"}
        </Button>
        <div>
          <p> No Account ? 
@@ -63,6 +62,4 @@ const SignInPage = () => {
        <ToastContainer/>
     </div>
   )
-}
-
-export default SignInPage;
+};

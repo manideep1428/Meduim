@@ -9,8 +9,7 @@ export default function Blog() {
     const router = useRouter();
     const id = params.id;
     const { blog, loading } = useEachBlogs(Number(id));
-    localStorage.setItem("blog", JSON.stringify(blog));
-    console.log(blog);
+    if(typeof window !== undefined) localStorage.setItem("blog", JSON.stringify(blog))
     const handleUpdate = () => {
         router.push(`/blog/${id}/update`);
     }

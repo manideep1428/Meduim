@@ -8,9 +8,10 @@ interface BlogProps{
   imageUrl: string; 
   name :string;
   id:string;
-  date:string;
+  date : any ;
 }
-export default  function BlogCard({ id ,title, content , imageUrl, name ,date}: BlogProps) {
+
+export default  function BlogCard({ id ,title, content , imageUrl, name , date }: BlogProps) {
     return(
         <div className="h-40 border-b-2 border-gray-300">
          <div className="flex justify-start items-start m-4 relative">

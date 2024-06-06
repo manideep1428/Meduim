@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { useEffect , useState} from "react";
 
-interface Blogs{
-  title :string;
-  content :string
-  id:string
-  authorId:{
-    author :string
-  }
-}
-
 interface Blog{
   title :string;
   content :string
@@ -19,7 +10,7 @@ interface Blog{
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(false);
-    const [blogs, setBlogs] = useState("");
+    const [blogs, setBlogs] = useState<Blog[]>();
   
     useEffect(() => {
       axios.get(`http://localhost:8080/api/v1/posts`).then((response) => {

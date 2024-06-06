@@ -1,13 +1,25 @@
-export default function getUser(){
-    const userToken = localStorage.getItem('token')
-    if(userToken){
-        return true 
+import jwt from 'jsonwebtoken'
+
+export default function GetUser(){
+    if (typeof window !== 'undefined') {
+        const userToken = localStorage.getItem('token')
+        // const decodeToken = jwt.decode(userToken  || "")
+        if(userToken){
+            return true
+        }
+       return false
     }
-    return false
 }
 
 export function SignOut(){
-    localStorage.removeItem('token')
+     if (typeof window !== 'undefined')  localStorage.removeItem('token')
      window.location.reload();
     return ({ message: "Successfully LogOut"})
+}
+
+export function GetBlog() {
+   if(typeof window !== undefined) {
+     const blog = localStorage.getItem('blog')
+    return blog;
+  }
 }
