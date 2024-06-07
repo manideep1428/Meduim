@@ -32,7 +32,7 @@ router.post("/v1/signin", async (req,res)=>{
             res.send({message : "login success" , token : token})
     } catch (error) {
        res.send(error)
-       console.log(error)
+    //    console.log(error)
     }
 })              
 

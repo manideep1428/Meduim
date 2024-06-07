@@ -5,13 +5,8 @@ import jwt, { verify } from "jsonwebtoken"
 const router = express.Router();
 const prisma  = new PrismaClient();
 
-// router.use("/",async (req,res)=>{
-//     const {authorization} = req.headers
-//     const verifyUser = jwt.sign(String(authorization) , process.env.JWT_SECRET || "nothing")
-// })
 
-
-
+// creating new post 
 router.post("/post", async(req, res) => {
    try {
     const {authorization} = req.headers
@@ -27,8 +22,7 @@ router.post("/post", async(req, res) => {
     })
      return res.json({post : post , message : "Post created successfully"})
    } catch (error) {
-     console.error
-     console.log(error)
+    //  console.log(error)
      return res.status(500).json({message : "Internal server error" , error : error})
    }
 })
@@ -36,7 +30,7 @@ router.post("/post", async(req, res) => {
 //updating post 
  
 router.put("/post/:id", async(req, res) => {
-    console.log("updating post...")
+    // console.log("updating post...")
     try {
         const {title , content } = req.body
         const {id}  =  req.params
@@ -56,7 +50,8 @@ router.put("/post/:id", async(req, res) => {
         return res.json({post : post , message : "Post updated successfully"})
     }
    catch(err){
-    console.log(err)
+    // console.log(err)
+    res.send(err)
     }
 });
 
@@ -76,7 +71,7 @@ router.delete("/post/:id", async(req, res) => {
         return res.json({post : post , message : "Post deleted successfully"})
     }
     catch(e){
-        console.log(e)
+        // console.log(e)
         return res.json({message : "Internal server error" , error : e})
     }  
 })
@@ -96,10 +91,9 @@ router.get("/posts",async (req,res)=>{
             }
             }
     })
-    console.log(post)
     return res.send(post)
    } catch (error) {
-    console.log(error)
+    // console.log(error)
      res.send(error);
    }
 });
@@ -113,10 +107,10 @@ router.get("/post/:id", async (req,res)=>{
             id :Number(id)
          }
         })  
-        console.log(blog)
+        // console.log(blog)
         return res.json({blog:blog})
     } catch (error) {
-        
+        res.send(error)
     }
 })
 
