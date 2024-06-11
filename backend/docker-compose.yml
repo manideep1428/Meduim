@@ -9,12 +9,12 @@ services:
     volumes:
       - postgres_database:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=mani
-      # - POSTGRES_DB=postgres
+      - POSTGRES_USER="myuser"
+      - POSTGRES_PASSWORD="mani"
+      - POSTGRES_DB=postgres
 
   backend:
-    image: mani1428/meduim_backend
+    image: meduim_backend
     container_name: meduim_backend
     ports:
       - "8080:8080"

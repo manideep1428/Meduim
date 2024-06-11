@@ -41,6 +41,7 @@ router.post("/v1/signin", async (req,res)=>{
 router.post("/v1/signup", async (req,res)=>{
      const {name ,password , email}= req.body    
      try{
+        console.log("req came in signup")
     const user  = await prisma.user.create({
         data : {
             name,
