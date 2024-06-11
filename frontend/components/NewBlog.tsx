@@ -15,14 +15,15 @@ export default function NewBlog(){
       try {
         const ok = BlogInputCheck.safeParse(blogData);
         if(ok.success){
-            let response = await axios.post("http://localhost:8080/v1/post/new" ,{ 
+            let response = await axios.post("http://localhost:8080/v1/post/" ,{ 
             headers: {
                 'Authorization' :localStorage.getItem("token"),
             }
         })
+          console.log(response)
         }
       } catch (error) {
-        
+         console.log(error)
       }
     }
     return(
